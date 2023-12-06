@@ -53,13 +53,13 @@ var dat = L.geoJson(data, {
       }
     }).addTo(myMap);
   
-    // Set up the legend
-    let legend = L.control({ position: "bottomright" });
-    legend.onAdd = function() {
-      let div = L.DomUtil.create("div", "info legend");
-      let limits = geojson.options.limits;
-      let colors = geojson.options.colors;
-      let labels = [];
+    // // Set up the legend.
+    // let legend = L.control({ position: "bottomright" });
+    // legend.onAdd = function() {
+    //   let div = L.DomUtil.create("div", "info legend");
+    //   let limits = geojson.options.limits;
+    //   let colors = geojson.options.colors;
+    //   let labels = [];
   
     //   // Add the minimum and maximum.
     //   let legendInfo = "<h1>Population with Children<br />(ages 6-17)</h1>" +
@@ -78,8 +78,8 @@ var dat = L.geoJson(data, {
     //   return div;
     // };
   
-    // Adding the legend to the map
-    legend.addTo(myMap);
+    // // Adding the legend to the map
+    // legend.addTo(myMap);
   
   });
   
