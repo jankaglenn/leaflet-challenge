@@ -12,6 +12,12 @@ let myMap = L.map("map", {
   
   // Load the GeoJSON data.
   let geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+
+  let earthquakes = new L.LayerGroup();
+
+  let overlays = {
+    Earthquakes: earthquakes
+  };
   
   // Get the data with d3.
   d3.json(geoData).then(function(data) {
@@ -41,7 +47,7 @@ function style(feature) {
 }
 
 
-var dat = L.geoJson(data, {
+L.geoJson(data, {
 	pointToLayer: function (feature, latlng) {
 		return L.circleMarker(latlng, style(feature));
 	},
@@ -51,7 +57,37 @@ var dat = L.geoJson(data, {
         layer.bindPopup("<strong>" + feature.properties.place + "</strong><br /><br />Magnitude: " +
           feature.properties.mag + "<br /><br />depth: " + feature.geometry.coordinates[2]);
       }
-    }).addTo(myMap);
+    }).addTo(earthquakes);
+
+    earthquakes.addTo(myMap);
+
+    
+    let legend = L.control({ position: "bottomright" });
+
+    legend.onAdd = function() {
+
+        let div = L.DomUtil.create("div", "info legend");
+        //labels = ["<10", "10-30", "30-50", "50-70", "70-90", "90+"];
+        let grades = [-10, 10, 30, 50, 70, 90];
+        let colors = ["#98ee00","#d4ee00","#eecc00","#ee9c00","#ea822c","#ea2c2c"];
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (let i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' 
+            + colors[1]
+            + "></i> " 
+            + grades[i] 
+            + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+    };
+
+    legend.addTo(myMap);
+
+    return legend;
+
+    });
   
     // // Set up the legend.
     // let legend = L.control({ position: "bottomright" });
@@ -81,7 +117,7 @@ var dat = L.geoJson(data, {
     // // Adding the legend to the map
     // legend.addTo(myMap);
   
-  });
+
   
   
   
