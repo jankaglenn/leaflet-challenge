@@ -11,9 +11,9 @@ html {
 
 .legend {
   padding: 10px;
-  /* font-size: 12px; */
+  font-size: 12px
   line-height: 18px;
-  color: #555;
+  /* color: #555; */
   background-color: #fff;
   border-radius: 5px;
 }
